@@ -3857,7 +3857,7 @@ int MySQL_Session::handler_ProcessingQueryError_CheckBackendConnectionStatus(MyS
 			myds->query_retries_on_failure--;
 			if ((myds->myconn->reusable==true) && myds->myconn->IsActiveTransaction()==false && myds->myconn->MultiplexDisabled()==false) {
 				if (myds->myconn->MyRS && myds->myconn->MyRS->transfer_started) {
-					proxy_error("ProxySQL started sending in the frontend. Query cannot be retried: %s, %d\n", myconn->parent->address, myconn->parent->port);
+					proxy_error("ProxySQL started sending in the frontend. Query cannot be retried. For more information check the variables mysql-query_retries_on_failure and mysql-threshold_resultset_size : %s, %d, users %s\n", myconn->parent->address, myconn->parent->port, myconn->userinfo->username);
 				// transfer to frontend has started, we cannot retry
 				} else {
 					retry_conn=true;
